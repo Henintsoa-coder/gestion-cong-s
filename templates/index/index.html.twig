@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#donnees_principales" role="tab" aria-controls="home" aria-selected="true">Données principales</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Demander un congé</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Demande une permission </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Déclarer une absence </a>
+                </li>
+            </ul>
+            </div>
+        </div>
+
+        <div class="tab-content" id="myTabContent">
+            <section class="tab-pane fade show active row" id="donnees_principales"  role="tabpanel" aria-labelledby="donnees_principales-tab">
+                <div class="col-md-12">
+                    <div id="infos" class="row">
+                        <div class="col-md-12">
+                            <h1 style="text-align:center" class="mb-4"> Bonjour {{ user }} ! </h1>
+                            <br>
+                            <p style="text-align:center">
+                                Nombre de jours de congés disponibles : <br>
+                                {{ nb_conges }} jours.
+                            </p>
+                            <p style="text-align:center">
+                                Nombre de permissions disponibles : <br> 
+                                {{ nb_permissions }} jours.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div id="demandesEnCours" class="row">
+                        <div class="col-md-12">
+                            <table class="table table-stripped">
+                                <thead>
+                                    <tr>
+                                        <h4 style="text-align:center; background:#343a40; padding-top:8px; padding-bottom:11px; color:white;" class="mb-0">Liste des demandes de congé</h4>
+                                    </tr>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>date début</th>
+                                        <th>date fin</th>
+                                        <th>motif</th>
+                                        <th>créé le</th>
+                                        <th>état</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>20-10-2020</td>
+                                        <td>24-10-2020</td>
+                                        <td>Papiers à faire</td>
+                                        <td>12-10-2020</td>
+                                        <td>En cours</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+        </div>
+        
+        
+    </div>
+{% endblock %}
