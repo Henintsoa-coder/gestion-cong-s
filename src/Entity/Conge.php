@@ -33,7 +33,7 @@ class Conge
     private $motif;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $etat;
 
@@ -42,6 +42,11 @@ class Conge
      * @ORM\JoinColumn(nullable=false)
      */
     private $utilisateur;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
     
 
     public function getId(): ?int
@@ -105,6 +110,18 @@ class Conge
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

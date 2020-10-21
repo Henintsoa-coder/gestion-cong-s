@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Conge{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h1>Faire une nouvelle demande de congé</h1>
+
+                {{ include('conge/_form.html.twig') }}
+
+                <a href="{{ path('conge_index') }}">back to list</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

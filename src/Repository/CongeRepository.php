@@ -19,22 +19,38 @@ class CongeRepository extends ServiceEntityRepository
         parent::__construct($registry, Conge::class);
     }
 
+    public function findAllDESC(){
+        return $this->createQueryBuilder('c')
+        ->orderBy('c.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function findOneUserById($utilisateurId): ?Conge
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.utilisateur = :val')
+            ->setParameter('val', $utilisateurId)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+    
+
     // /**
     //  * @return Conge[] Returns an array of Conge objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findByUtilisateurId($utilisateurId)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('c.utilisateur = :val')
+            ->setParameter('val', $utilisateurId)
+            ->orderBy('c.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Conge

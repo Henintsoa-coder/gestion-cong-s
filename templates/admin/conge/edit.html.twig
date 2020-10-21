@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande de Conge{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="col-md-12 mt-4">
+        <div class="mb-4">
+            <h1> Demande de congé </h1>
+        </div>
+
+        <div>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id_conge</th>
+                        <td>{{ conge.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ conge.utilisateur.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th>
+                        <td>{{ conge.utilisateur.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fonction</th>
+                        <td>{{ conge.utilisateur.fonction }}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact</th>
+                        <td>
+                            {% if conge.utilisateur.telephone != (null) %} 
+                                {{ conge.utilisateur.telephone }} -
+                            {% endif %}
+                            {{ conge.utilisateur.email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Date_debut</th>
+                        <td>{{ conge.dateDebut ? conge.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
+                     </tr>
+                    <tr>
+                        <th>Date_fin</th>
+                        <td>{{ conge.dateFin ? conge.dateFin|date('d-m-Y H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Motif</th>
+                        <td>{{ conge.motif }}</td>
+                    </tr>
+                    <tr>
+                        <th>Etat</th>
+                        <td>{{ conge.etat ? 'Validé.' : 'Non validé.' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Créé le</th>
+                        <td>{{ conge.createdAt ? conge.createdAt|date('d-m-Y') : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-5 mb-5">
+            {{ form_start(form) }}
+                {{ form_row(form.etat) }}
+                <button class="btn btn-primary">{{ button_label|default('Valider les modifications') }}</button>
+                <a href="{{ path('admin_conge_index') }}" class="btn btn-secondary">Revenir à la liste.</a>
+                <a href="" class="btn btn-info">Imprimer</a>
+            {{ form_end(form) }}
+        </div>
+
+        {#{ include('admin/conge/_delete_form.html.twig') }#}
+    </div>
+</div>
+{% endblock %}

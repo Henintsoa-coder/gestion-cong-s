@@ -1,0 +1,7 @@
+{{ form_start(form) }}
+    {{ form_row(form.date_debut) }}
+    {{ form_row(form.date_fin) }}
+    {{ form_row(form.motif) }}
+    
+    <button class="btn btn-primary">{{ button_label|default('Envoyer') }}</button>
+{{ form_end(form) }}

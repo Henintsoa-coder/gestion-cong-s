@@ -1,82 +1,102 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello IndexController!{% endblock %}
+{% block title %} Accueil {% endblock %}
 
 {% block body %}
     <div class="container">
-        <div class="row mt-4">
+        <section class="tab-pane fade show active row mt-5" role="tabpanel" aria-labelledby="donnees_principales-tab">
             <div class="col-md-12">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#donnees_principales" role="tab" aria-controls="home" aria-selected="true">Données principales</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Demander un congé</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Demande une permission </a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Déclarer une absence </a>
-                </li>
-            </ul>
-            </div>
-        </div>
-
-        <div class="tab-content" id="myTabContent">
-            <section class="tab-pane fade show active row" id="donnees_principales"  role="tabpanel" aria-labelledby="donnees_principales-tab">
-                <div class="col-md-12">
-                    <div id="infos" class="row">
-                        <div class="col-md-12">
-                            <h1 style="text-align:center" class="mb-4"> Bonjour {{ user }} ! </h1>
+                <div id="infos" class="row">
+                    <div class="col-md-12">
+                            {% for message in app.flashes('success') %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            <h1 style="text-align:center" class=""> Bonjour {{ user }} ! </h1>
                             <br>
+                        <div class="alert alert-info" style="padding-top:21px">
                             <p style="text-align:center">
                                 Nombre de jours de congés disponibles : <br>
-                                {{ nb_conges }} jours.
+                                {{ nb_conges | number_format(1, '.', ' ') }} jours.
                             </p>
                             <p style="text-align:center">
-                                Nombre de permissions disponibles : <br> 
-                                {{ nb_permissions }} jours.
+                                Nombre de jours de permission disponibles : <br> 
+                                {{ nb_permissions | number_format(1, '.', ' ')}} jours.
                             </p>
-                        </div>
-                    </div>
-
-                    <div id="demandesEnCours" class="row">
-                        <div class="col-md-12">
-                            <table class="table table-stripped">
-                                <thead>
-                                    <tr>
-                                        <h4 style="text-align:center; background:#343a40; padding-top:8px; padding-bottom:11px; color:white;" class="mb-0">Liste des demandes de congé</h4>
-                                    </tr>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>date début</th>
-                                        <th>date fin</th>
-                                        <th>motif</th>
-                                        <th>créé le</th>
-                                        <th>état</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>20-10-2020</td>
-                                        <td>24-10-2020</td>
-                                        <td>Papiers à faire</td>
-                                        <td>12-10-2020</td>
-                                        <td>En cours</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-        </div>
-        
-        
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <h4 style="text-align:center; background:#343a40; padding-top:8px; padding-bottom:11px; color:white;" class="mb-0">
+                                        Liste de mes demandes de congé
+                                    </h4>
+                                </tr>
+                                <tr>
+                                    <th>id</th>
+                                    <th>date début</th>
+                                    <th>date fin</th>
+                                    <th>motif</th>
+                                    <th>créé le</th>
+                                    <th>état</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for congeUser in congesUser %}
+                                <tr>
+                                    <td>{{ congeUser.id }}</td>
+                                    <td>{{ congeUser.dateDebut ? congeUser.dateDebut | date('d/m/Y H:i:s') }}</td>
+                                    <td>{{ congeUser.dateFin ? congeUser.dateFin | date('d/m/Y H:i:s') }}</td>
+                                    <td>{{ congeUser.motif }}</td>
+                                    <td>{{ congeUser.createdAt ? congeUser.createdAt|date('d/m/Y H:i:s') : '' }}</td>
+                                    <td>
+                                        {% if congeUser.etat is same as(null) %}
+                                            <div class="alert alert-info" style="text-align:center">
+                                                {{ 'En cours' }}
+                                            </div>
+                                        {% elseif congeUser.etat == 1 %}
+                                            <div class="alert alert-success" style="text-align:center">
+                                                {{ 'Acceptée' }}
+                                            </div>
+                                        {% elseif congeUser.etat == 0 %}
+                                            <div class="alert alert-danger" style="text-align:center">
+                                                {{ 'Refusée' }}
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <!--a href="{{ path('conge_show', {'id': congeUser.id}) }}">show</a-->
+                                        {% if (congeUser.etat is same as(null)) %}
+                                            <a href="{{ path('conge_edit', {'id': congeUser.id}) }}" class="btn btn-secondary">Editer</a>
+                                            <form method="post" action="{{ path('conge_delete', {'id': congeUser.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" style="display:inline-block">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ congeUser.id) }}">
+                                                <button class="btn btn-danger">Delete</button>
+                                            </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                 {% else %}
+                                <tr>
+                                    <td colspan="7">Aucun enregistrement trouvé.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <p class="mb-4">
+                            <a href="{{ path('conge_new') }}" class="btn btn-primary">Demander un nouveau congé</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>      
+       
     </div>
 {% endblock %}

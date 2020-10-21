@@ -38,6 +38,11 @@ class Absence
      */
     private $utilisateur;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $created_at;
+
 
     public function getId(): ?int
     {
@@ -88,6 +93,18 @@ class Absence
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

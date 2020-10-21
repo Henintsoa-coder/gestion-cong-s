@@ -59,16 +59,6 @@ class Utilisateur implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $nb_conges;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $nb_permissions;
-
-    /**
      * @ORM\OneToMany(targetEntity=Conge::class, mappedBy="utilisateur")
      */
     private $conges;
@@ -82,6 +72,16 @@ class Utilisateur implements UserInterface
      * @ORM\OneToMany(targetEntity=Absence::class, mappedBy="utilisateur")
      */
     private $absences;
+
+    /**
+     * @ORM\Column(type="decimal", precision=6, scale=3)
+     */
+    private $nb_conges;
+
+    /**
+     * @ORM\Column(type="decimal", precision=6, scale=3)
+     */
+    private $nb_permissions;
     
 
     public function __construct()
@@ -218,30 +218,6 @@ class Utilisateur implements UserInterface
         return $this;
     }
 
-    public function getNbConges(): ?int
-    {
-        return $this->nb_conges;
-    }
-
-    public function setNbConges(int $nb_conges): self
-    {
-        $this->nb_conges = $nb_conges;
-
-        return $this;
-    }
-
-    public function getNbPermissions(): ?int
-    {
-        return $this->nb_permissions;
-    }
-
-    public function setNbPermissions(int $nb_permissions): self
-    {
-        $this->nb_permissions = $nb_permissions;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Conge[]
      */
@@ -331,6 +307,30 @@ class Utilisateur implements UserInterface
                 $absence->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbConges(): ?string
+    {
+        return $this->nb_conges;
+    }
+
+    public function setNbConges(string $nb_conges): self
+    {
+        $this->nb_conges = $nb_conges;
+
+        return $this;
+    }
+
+    public function getNbPermissions(): ?string
+    {
+        return $this->nb_permissions;
+    }
+
+    public function setNbPermissions(string $nb_permissions): self
+    {
+        $this->nb_permissions = $nb_permissions;
 
         return $this;
     }

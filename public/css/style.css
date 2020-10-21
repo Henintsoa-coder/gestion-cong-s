@@ -4,5 +4,11 @@
 }
 
 #donnees_principales, #demandesEnCours{
-    margin-top: 72px;
+    margin-top: 62px;
+}
+
+.formatedTitle {
+    padding-top:8px; 
+    padding-bottom:11px; 
+    text-align:center
 }
