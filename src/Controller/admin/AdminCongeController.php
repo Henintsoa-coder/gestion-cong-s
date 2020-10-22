@@ -66,7 +66,9 @@ class AdminCongeController extends AbstractController
          * */
         if ($conge->getEtat() == true) {
             $nb_total_conges = 0;
-            //dump($timeConge);
+            return $this->redirectToRoute("admin_conge_index");
+            dump($conge->getEtat());
+            exit();
         } elseif ($conge->getEtat() === null || $conge->getEtat() == false) {
             $timeConge = date_diff($conge->getDateDebut(), $conge->getDateFin());
 

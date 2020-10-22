@@ -36,5 +36,9 @@ security:
     access_control:
          #- { path: ^/, roles: ROLE_USER }
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/conge, roles: ROLE_USER }
+         #- { path: ^/conge, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_MODO: ROLE_USER
+        ROLE_ADMIN: ROLE_MODO

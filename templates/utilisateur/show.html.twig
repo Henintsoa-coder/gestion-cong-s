@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur{% endblock %}
+
+{% block body %}
+    <h1 class="mt-5 mb-5">Utilisateur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ utilisateur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ utilisateur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ utilisateur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Fonction</th>
+                <td>{{ utilisateur.fonction }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ utilisateur.email }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ utilisateur.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Rôle(s)</th>
+                <td>
+                    {% for role in utilisateur.roles %}
+                        {% if role =='ROLE_USER' %}
+                            Utilisateur <br>
+                        {% elseif role == 'ROLE_MODO' %}
+                            Modérateur <br>
+                        {% elseif role == 'ROLE_ADMIN' %}
+                            Administrateur <br>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Nombre de congés</th>
+                <td>{{ utilisateur.nbConges | number_format('1', '.', '') }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de permissions</th>
+                <td>{{ utilisateur.nbPermissions | number_format('1', '.', '')}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-primary">edit</a>
+    <a href="{{ path('utilisateur_index') }}" class="btn btn-secondary">back to list</a>
+
+    {{ include('utilisateur/_delete_form.html.twig') }}
+{% endblock %}

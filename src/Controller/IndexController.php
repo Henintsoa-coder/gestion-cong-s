@@ -6,11 +6,13 @@ use App\Entity\Utilisateur;
 use App\Repository\CongeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="index")
+     * @IsGranted("ROLE_USER")
      */
     public function index(CongeRepository $congeRepository)
     {

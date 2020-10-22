@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
@@ -45,9 +47,15 @@ class Utilisateur implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @assert\Length(min="6", minMessage="Le mot de passe doit faire au minimum 6 caractères.")
      */
     private $password;
-
+    
+    /**
+     *@Assert\EqualTo(propertyPath="password", message="Votre mot de passe doit être le même que celui que vous confirmez.")
+     */
+    public $confirm_password;
+    
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */

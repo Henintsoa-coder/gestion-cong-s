@@ -9,9 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/permission")
+ * @IsGranted("ROLE_USER")
  */
 class PermissionController extends AbstractController
 {
@@ -20,8 +22,6 @@ class PermissionController extends AbstractController
      */
     public function index(PermissionRepository $permissionRepository): Response
     {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
-
         return $this->render('permission/index.html.twig', [
             'permissions' => $permissionRepository->findAll(),
         ]);

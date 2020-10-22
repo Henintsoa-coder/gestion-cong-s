@@ -49,8 +49,8 @@
                             <td>{{ conge.createdAt ? conge.createdAt|date('d-m-Y H:i:s') : '' }}</td>
                             <td>
                                 {% if conge.etat is same as(null) %}
-                                <a href="{{ path('conge_show', {'id': conge.id}) }}" class="btn btn-outline-primary btn-block">Voir</a>
                                 <a href="{{ path('conge_edit', {'id': conge.id}) }}" class="btn btn-outline-secondary btn-block">Editer</a>
+                                <a href="{{ path('conge_show', {'id': conge.id}) }}" class="btn btn-outline-primary btn-block">Voir</a>
                                 {% endif %}
                             </td>
                         </tr>

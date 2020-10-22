@@ -13,48 +13,51 @@
                 {% endfor %}
                 <h1 style="margin-top:29px; margin-bottom:49px; text-align:center;">Liste des demandes de congé.</h1>
 
-                <table class="table table-striped mb-4">
+                <table class="table table-striped mb-4" style="text-align:center;">
                     <thead class="thead-dark">
                         <tr>
                             <th>Id</th>
                             <th>Nom</th>
-                            <th>Prenom</th>
                             <th>Date de debut</th>
                             <th>Date de fin</th>
                             <th>Motif</th>
                             <th>Etat</th>
-                            <th>Created_at</th>
-                            <th>actions</th>
+                            <th>Créée le</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for conge in conges %}
                         <tr>
                             <td>{{ conge.id }}</td>
-                            <td>{{ conge.utilisateur.prenom }}</td>
-                            <td>{{ conge.utilisateur.nom }}</td>
+                            <td>
+                                {{ conge.utilisateur.nom }} <br>
+                                {{ conge.utilisateur.prenom }}
+                            </td>
                             <td>{{ conge.dateDebut ? conge.dateDebut|date('d/m/Y H:i:s') : '' }}</td>
                             <td>{{ conge.dateFin ? conge.dateFin|date('d/m/Y H:i:s') : '' }}</td>
                             <td>{{ conge.motif }}</td>
                             <td>
                                 {% if conge.etat is same as(null) %}
-                                    <div class=" alert-info" style="text-align:center;">
-                                        {{ 'En attente' }}
+                                    <div class="alert alert-info" style="text-align:center;">
+                                        {{ 'En cours' }}
                                     </div>
                                 {% elseif conge.etat == 1 %}
-                                    <div class=" alert-success" style="text-align:center;">
-                                        {{ 'Accepté' }}
+                                    <div class="alert alert-success" style="text-align:center;">
+                                        {{ 'Acceptée' }}
                                     </div>
                                 {% elseif conge.etat == 0 %}
-                                    <div class=" alert-danger" style="text-align:center;">
-                                        {{ 'Refusé' }}
+                                    <div class="alert alert-danger" style="text-align:center;">
+                                        {{ 'Refusée' }}
                                     </div>
                                 {% endif %}
                             </td>
                             <td>{{ conge.createdAt ? conge.createdAt|date('d-m-Y') : '' }}</td>
                             <td>
-                                <a href="{{ path('admin_conge_edit', {'id': conge.id}) }}" class="btn btn-warning btn-block"  style="color:white;" target="parent">Editer</a>
                                 <a href="{{ path('admin_conge_show', {'id': conge.id}) }}" class="btn btn-primary btn-block"  target="parent">Voir</a>
+                                {% if conge.etat is same as(null) or conge.etat == 0 %}
+                                <a href="{{ path('admin_conge_edit', {'id': conge.id}) }}" class="btn btn-warning btn-block"  style="color:white;" target="parent">Editer</a>
+                                {% endif %}
                                 <!--a href="" class="btn btn-info btn-block">Accepter</a>
                                 <a href="" class="btn btn-danger btn-block">Refuser</a-->
                             </td>

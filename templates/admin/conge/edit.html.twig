@@ -50,8 +50,26 @@
                         <td>{{ conge.motif }}</td>
                     </tr>
                     <tr>
-                        <th>Etat</th>
-                        <td>{{ conge.etat ? 'Validé.' : 'Non validé.' }}</td>
+                        <th>
+                            <p style="padding-top:11px;"> 
+                                Etat
+                            </p>
+                        </th>
+                        <td>
+                            {% if conge.etat is same as(null) %}
+                                <div class="alert alert-info" style="text-align:center; color:white !important; border-radius: 7px; margin-bottom:0px;">
+                                    {{ 'En cours' }}
+                                </div>
+                            {% elseif conge.etat == 1 %}
+                                <div class="alert alert-success" style="text-align:center; color:white !important; border-radius: 7px; margin-bottom:0px;">
+                                    {{ 'Acceptée' }}
+                                </div>
+                            {% elseif conge.etat == 0 %}
+                                <div class="alert alert-danger" style="text-align:center;  color:white !important;  border-radius: 7px; margin-bottom:0px;">
+                                    {{ 'Refusée' }}
+                                </div>
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <th>Créé le</th>

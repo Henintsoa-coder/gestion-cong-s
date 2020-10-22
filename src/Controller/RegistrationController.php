@@ -19,6 +19,7 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
         }
@@ -29,19 +30,19 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            dump($user->getPassword());
+            dump($user->confirm_password);
+            
+            $hash =  $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('index');
+            $this->addFlash('success', 'Salarié enregistré avec succès');
+            
+            return $this->redirectToRoute('utilisateur_index');
         }
 
         return $this->render('registration/register.html.twig', [

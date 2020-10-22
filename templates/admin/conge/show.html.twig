@@ -3,10 +3,10 @@
 {% block title %}Conge{% endblock %}
 
 {% block body %}
-    <div class="container" style=" border:2px solid #eee;">
+    <div class="container">
         <div class="row mt-4">
-            <div class="col-md-12">
-                <h2 style="padding-top:8px; padding-bottom:11px; text-align:center" class="mb-3">Demande de Congé</h2>
+            <div class="col-md-12"  style=" border:2px solid #eee; border-radius:12px;">
+                <h2 style="padding-top:8px; padding-bottom:11px; text-align:center;" class=" mt-3 mb-3">Demande de Congé</h2>
                 
                 <table class="table table-bordered table-striped" style="text-align:center;">
                     <tbody>
@@ -48,11 +48,29 @@
                             <td>{{ conge.motif }}</td>
                         </tr>
                         <tr>
-                            <th>Etat</th>
-                            <td>{{ conge.etat ? 'Validé' : 'Non-validé' }}</td>
+                            <th>
+                                <p style="padding-top:11px;"> 
+                                    Etat
+                                </p>
+                            </th>
+                            <td>
+                                {% if conge.etat is same as(null) %}
+                                    <div class="alert alert-info" style="text-align:center; color:white !important; border-radius: 7px; margin-bottom:0px;">
+                                        {{ 'En cours' }}
+                                    </div>
+                                {% elseif conge.etat == 1 %}
+                                    <div class="alert alert-success" style="text-align:center; color:white !important; border-radius: 7px; margin-bottom:0px;">
+                                        {{ 'Acceptée' }}
+                                    </div>
+                                {% elseif conge.etat == 0 %}
+                                    <div class="alert alert-danger" style="text-align:center;  color:white !important;  border-radius: 7px; margin-bottom:0px;">
+                                        {{ 'Refusée' }}
+                                    </div>
+                                {% endif %}
+                            </td>
                         </tr>
                         <tr>
-                            <th>Créé le</th>
+                            <th>Créée le</th>
                             <td>{{ conge.createdAt ? conge.createdAt|date('d-m-Y') : '' }}</td>
                         </tr>
                     </tbody>

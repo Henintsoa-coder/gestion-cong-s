@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur index{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        th, td {
+            text-align:center;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <h1 class="mt-5 mb-5" style="text-align:center;">Utilisateur index</h1>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nom</th>
+                            <th>Fonction</th>
+                            <th>Email</th>
+                            <th>Telephone</th>
+                            <th>Roles</th>
+                            <th>Congés</th>
+                            <th>Permissions</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for utilisateur in utilisateurs %}
+                        <tr>
+                            <td>{{ utilisateur.id }}</td>
+                            <td>
+                                {{ utilisateur.nom }}
+                                <br>
+                                {{ utilisateur.prenom }}
+                            </td>
+                            <td>{{ utilisateur.fonction }}</td>
+                            <td>{{ utilisateur.email }}</td>
+                            <td>{{ utilisateur.telephone }}</td>
+                            <td>
+                                {% for role in utilisateur.roles %}
+                                    {% if role =='ROLE_USER' %}
+                                        Utilisateur
+                                    {% elseif role == 'ROLE_MODO' %}
+                                        Modérateur
+                                    {% elseif role == 'ROLE_ADMIN' %}
+                                        Administrateur
+                                    {% endif %}
+                                {% endfor %}
+                                {#{ utilisateur.roles ? utilisateur.roles|json_encode : '' }#}</td>
+                            <td style="text-align:center;">{{ utilisateur.nbConges | number_format(1, '.', ' ') }}</td>
+                            <td style="text-align:center;">{{ utilisateur.nbPermissions |number_format(1, '.', ' ') }}</td>
+                            <td>
+                                <a href="{{ path('utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-primary btn-block" target="parent">Voir</a>
+                                <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning btn-block" style="color:white" target="parent">Editer</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="11">Aucun utilisateur trouvé.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <a href="{{ path('app_register') }}" class="btn btn-primary">Enregistrer un nouveau salarié</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -10,9 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/conge")
+ * @IsGranted("ROLE_USER")
  */
 class CongeController extends AbstractController
 {
@@ -21,7 +23,7 @@ class CongeController extends AbstractController
      */
     public function index(CongeRepository $congeRepository): Response
     {
-        $this->denyAccessUnlessGranted("ROLE_USER");
+        //$this->denyAccessUnlessGranted("ROLE_USER");
         return $this->render('conge/index.html.twig', [
             'conges' => $congeRepository->findByUtilisateurId($this->getUser()?$this->getUser()->getId():'')
         ]);

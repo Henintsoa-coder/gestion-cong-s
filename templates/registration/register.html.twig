@@ -4,25 +4,33 @@
 
 {% block body %}
 <div class="container">
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+    <div class="row mb-5">
+        <div class="col-md-12">
+            {% for flashError in app.flashes('verify_email_error') %}
+                <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+            {% endfor %}
+            
+            <div class="alert alert-secondary mt-5 mb-0">
+                Mot de passe par défaut : azerty
+            </div>
+            <h1 class="mt-4 mb-5">Register</h1>
 
-    <h1>Register</h1>
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.nom) }}
+                {{ form_row(registrationForm.prenom) }}
+                {{ form_row(registrationForm.fonction) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.telephone) }}
+                {{ form_row(registrationForm.password, {'label': 'Password','attr': {'value':'azerty'}}) }}
+                {{ form_row(registrationForm.confirm_password, {'attr': {'value':'azerty'}}) }}
+                {{ form_row(registrationForm.nb_conges, {'attr': {'value':2.5}}) }}
+                {{ form_row(registrationForm.nb_permissions, {'attr': {'value':10}}) }}
+                {{ form_row(registrationForm.roles) }}
+                {#{ form_row(registrationForm.agreeTerms) }#}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.fonction) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.nb_conges) }}
-        {{ form_row(registrationForm.nb_permissions) }}
-        {#{ form_row(registrationForm.agreeTerms) }#}
-
-        <button type="submit" class="btn btn-primary">Register</button>
-    {{ form_end(registrationForm) }}
+                <button type="submit" class="btn btn-primary">Register</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 </div>
 {% endblock %}
