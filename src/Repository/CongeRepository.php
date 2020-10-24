@@ -38,7 +38,7 @@ class CongeRepository extends ServiceEntityRepository
     
 
     // /**
-    //  * @return Conge[] Returns an array of Conge objects
+    //  * Returns an array of Conges objects
     //  */
     
     public function findByUtilisateurId($utilisateurId)

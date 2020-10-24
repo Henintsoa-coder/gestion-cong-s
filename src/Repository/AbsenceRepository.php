@@ -20,6 +20,22 @@ class AbsenceRepository extends ServiceEntityRepository
     }
 
     // /**
+    //  * Returns an array of Absence objects
+    //  */
+    
+    public function findByUtilisateurId($utilisateurId)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.utilisateur = :val')
+            ->setParameter('val', $utilisateurId)
+            ->orderBy('a.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+
+    // /**
     //  * @return Absence[] Returns an array of Absence objects
     //  */
     /*

@@ -29,9 +29,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('conge_new') }}">Congé</a>
-                            <a class="dropdown-item" href="#">Permission</a>
+                            <a class="dropdown-item" href="{{ path('permission_new') }}">Permission</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Déclaration d'abscence</a>
+                            <a class="dropdown-item" href="{{ path('absence_new') }}">Déclaration d'abscence</a>
                         </div>
                     </li>
                 {% endif %}
@@ -42,9 +42,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('admin_conge_index') }}">congés</a>
-                            <a class="dropdown-item" href="#">permissions</a>
+                            <a class="dropdown-item" href="{{ path('admin_permission_index')}}">permissions</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Déclaration d'abscence</a>
+                            <a class="dropdown-item" href="{{ path('admin_absence_index') }}">Déclaration d'abscence</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -54,8 +54,6 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('app_register') }}">Créer un nouveau salarié</a>
                             <a class="dropdown-item" href="{{ path('utilisateur_index') }}">Voir la liste des salariés</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Autre possibilité</a>
                         </div>
                     </li>
                 {% endif %}
@@ -143,7 +141,14 @@
             <!--/div>
         </nav-->
             <div class="container">
+                <!--Permet d'afficher les messages flash-success -->
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success mt-5">
+                         {{ message }}
+                    </div>
+                {% endfor %}
 
+                <!--Permet d'afficher les messages flash-danger -->
                 {% for message in app.flashes('success') %}
                     <div class="alert alert-success mt-5">
                          {{ message }}

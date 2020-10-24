@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div id="infos" class="row">
                     <div class="col-md-12">
-                            <h1 style="text-align:center" class=""> Bonjour {{ user }} ! </h1>
+                            <h1 style="text-align:center" class="mb-5"> Bonjour {{ user }} ! </h1>
                             <br>
                         <div class="alert alert-info" style="padding-top:21px">
                             <p style="text-align:center">
@@ -22,13 +22,14 @@
                         </div>
                     </div>
                 </div>
-
+                
+                <!-- liste des demandes de congé -->
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-striped">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <h4 style="text-align:center; background:#343a40; padding-top:8px; padding-bottom:11px; color:white;" class="mb-0">
+                                    <h4 class="mt-5 mb-4">
                                         Liste de mes demandes de congé
                                     </h4>
                                 </tr>
@@ -88,6 +89,117 @@
                         <p class="mb-4">
                             <a href="{{ path('conge_new') }}" class="btn btn-primary">Demander un nouveau congé</a>
                         </p>
+                    </div>
+                </div>
+                
+                <!-- liste des demandes de permission-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mt-5">
+                            <h4 style="margin-top:29px; margin-bottom:49px;" class="mt-5 mb-4">Liste de mes demandes de permission.</h4>
+
+                            <table class="table mb-4" style="text-align:center;">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Date de debut</th>
+                                        <th>Date de fin</th>
+                                        <th>Motif</th>
+                                        <th>Créée le</th>
+                                        <th>Etat</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for  permissionUser in permissionsUser %}
+                                    <tr>
+                                        <td>{{  permissionUser.id }}</td>
+                                        <td>{{  permissionUser.dateDebut ?  permissionUser.dateDebut | date('d/m/Y H:i:s') }}</td>
+                                        <td>{{  permissionUser.dateFin ?  permissionUser.dateFin | date('d/m/Y H:i:s') }}</td>
+                                        <td>{{  permissionUser.motif }}</td>
+                                        <td>{{  permissionUser.createdAt ?  permissionUser.createdAt|date('d/m/Y H:i:s') : '' }}</td>
+                                        <td>
+                                            {% if  permissionUser.etat is same as(null) %}
+                                                <div class="alert alert-info" style="text-align:center">
+                                                    {{ 'En cours' }}
+                                                </div>
+                                            {% elseif  permissionUser.etat == 1 %}
+                                                <div class="alert alert-success" style="text-align:center">
+                                                    {{ 'Acceptée' }}
+                                                </div>
+                                            {% elseif permissionUser.etat == 0 %}
+                                                <div class="alert alert-danger" style="text-align:center">
+                                                    {{ 'Refusée' }}
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <!--a href="{{ path('permission_show', {'id':  permissionUser.id}) }}">show</a-->
+                                            {% if ( permissionUser.etat is same as(null)) %}
+                                                <a href="{{ path('permission_edit', {'id':  permissionUser.id}) }}" class="btn btn-secondary">Editer</a>
+                                                <form method="post" action="{{ path('permission_delete', {'id':  permissionUser.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" style="display:inline-block">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~  permissionUser.id) }}">
+                                                    <button class="btn btn-danger">Delete</button>
+                                                </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="7">Aucun enregistrement trouvé.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- liste des absences -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mt-5">
+                            <h4 style="margin-top:29px; margin-bottom:49px;" class="mt-5 mb-4">Liste des absences</h4>
+
+                            <table class="table mb-4" style="text-align:center;">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Date de debut</th>
+                                        <th>Date de fin</th>
+                                        <th>Motif</th>
+                                        <th>Créé le</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for  absenceUser in absencesUser %}
+                                    <tr>
+                                        <td>{{  absenceUser.id }}</td>
+                                        <td>{{  absenceUser.dateDebut ?  absenceUser.dateDebut | date('d/m/Y H:i:s') }}</td>
+                                        <td>{{  absenceUser.dateFin ?  absenceUser.dateFin | date('d/m/Y H:i:s') }}</td>
+                                        <td>{{  absenceUser.motif }}</td>
+                                        <td>{{  absenceUser.createdAt ?  absenceUser.createdAt|date('d/m/Y H:i:s') : '' }}</td>
+                                        <td>
+                                            <!--a href="{{ path('conge_show', {'id':  absenceUser.id}) }}">show</a-->
+                                            
+                                            <a href="{{ path('absence_edit', {'id':  absenceUser.id}) }}" class="btn btn-secondary">Editer</a>
+                                            <form method="post" action="{{ path('absence_delete', {'id':  absenceUser.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" style="display:inline-block">
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~  absenceUser.id) }}">
+                                                <button class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="7">Aucun enregistrement trouvé.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

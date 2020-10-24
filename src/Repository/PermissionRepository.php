@@ -20,6 +20,21 @@ class PermissionRepository extends ServiceEntityRepository
     }
 
     // /**
+    //  * Returns an array of Permissions objects
+    //  */
+    
+    public function findByUtilisateurId($utilisateurId)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.utilisateur = :val')
+            ->setParameter('val', $utilisateurId)
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    // /**
     //  * @return Permission[] Returns an array of Permission objects
     //  */
     /*

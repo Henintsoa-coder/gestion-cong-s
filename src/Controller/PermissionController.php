@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use DateTime;
 /**
  * @Route("/permission")
  * @IsGranted("ROLE_USER")
@@ -37,11 +37,15 @@ class PermissionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $permission->setCreatedAt(new DateTime());
+            $permission->setUtilisateur($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($permission);
             $entityManager->flush();
 
-            return $this->redirectToRoute('permission_index');
+            $this->addFlash('success', 'Demande enregistrée avec succès.');
+
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('permission/new.html.twig', [
@@ -71,7 +75,7 @@ class PermissionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('permission_index');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('permission/edit.html.twig', [
@@ -91,6 +95,6 @@ class PermissionController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('permission_index');
+        return $this->redirectToRoute('index');
     }
 }

@@ -2,14 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Permission;
-use App\Entity\Utilisateur;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Absence;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PermissionType extends AbstractType
+class AbsenceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,20 +15,15 @@ class PermissionType extends AbstractType
             ->add('date_debut')
             ->add('date_fin')
             ->add('motif')
-            //->add('etat')
-            //->add('created_at')
-            /*->add('utilisateur', EntityType::class, [
-                'class' => Utilisateur::class,
-                'required' => false,
-                'choice_label' => 'id'
-            ])*/
+            /*->add('created_at')
+            ->add('utilisateur')*/
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Permission::class,
+            'data_class' => Absence::class,
         ]);
     }
 }

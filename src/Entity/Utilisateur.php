@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Il y a déjà un compte qui correspond à cet email")
  */
 class Utilisateur implements UserInterface
 {
@@ -41,6 +41,8 @@ class Utilisateur implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(message = "L'email n'est pas un e-mail valide.")
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -90,6 +92,11 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="decimal", precision=6, scale=3)
      */
     private $nb_permissions;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $activation_token;
     
 
     public function __construct()
@@ -339,6 +346,18 @@ class Utilisateur implements UserInterface
     public function setNbPermissions(string $nb_permissions): self
     {
         $this->nb_permissions = $nb_permissions;
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activation_token;
+    }
+
+    public function setActivationToken(?string $activation_token): self
+    {
+        $this->activation_token = $activation_token;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\admin;
 
 use App\Entity\Conge;
 use Symfony\Component\Form\AbstractType;

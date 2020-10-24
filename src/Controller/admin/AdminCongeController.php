@@ -8,12 +8,18 @@ use DateTime;
 use App\Entity\Conge;
 use App\Entity\Utilisateur;
 use App\Repository\CongeRepository;
-use App\Form\CongeAdminType;
+use App\Form\admin\CongeAdminType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 //use Knp\Snappy\Pdf;
 use Twig\Environment;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
+/**
+ * @Route("/admin_conge")
+ * @IsGranted("ROLE_ADMIN")
+ */
 class AdminCongeController extends AbstractController
 {
     private $twig;
@@ -25,7 +31,7 @@ class AdminCongeController extends AbstractController
     }
 
     /**
-     * @Route("/admin_conge", name="admin_conge_index", methods={"GET"})
+     * @Route("/", name="admin_conge_index", methods={"GET"})
      */
     public function index(CongeRepository $congeRepository): Response
     {
@@ -37,7 +43,7 @@ class AdminCongeController extends AbstractController
 
 
     /**
-     * @Route("{id}/admin_conge/", name="admin_conge_show", methods={"GET"})
+     * @Route("/{id}", name="admin_conge_show", methods={"GET"})
      */
     public function show(Conge $conge): Response
     {
@@ -51,7 +57,7 @@ class AdminCongeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/admin_edit", name="admin_conge_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="admin_conge_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Conge $conge): Response
     {
@@ -112,7 +118,7 @@ class AdminCongeController extends AbstractController
      * 
      * Permet de transformer la page web en pdf
      * 
-     * @Route("/{id}/print", name="print_demande_conge", methods={"GET"})
+     * @Route("/print/{id}", name="print_demande_conge", methods={"GET"})
      */
     public function print_demande(Conge $conge, \Knp\Snappy\Pdf $snappy){
         $this->denyAccessUnlessGranted("ROLE_ADMIN");
