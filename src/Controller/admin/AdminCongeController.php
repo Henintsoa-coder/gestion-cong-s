@@ -35,7 +35,6 @@ class AdminCongeController extends AbstractController
      */
     public function index(CongeRepository $congeRepository): Response
     {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
         return $this->render('admin/conge/index.html.twig', [
             'conges' => $congeRepository->findAllDESC()
         ]);
@@ -46,10 +45,7 @@ class AdminCongeController extends AbstractController
      * @Route("/{id}", name="admin_conge_show", methods={"GET"})
      */
     public function show(Conge $conge): Response
-    {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
-       
-        
+    { 
         return $this->render('admin/conge/show.html.twig', [
             'conge' => $conge,
         ]);
@@ -61,7 +57,6 @@ class AdminCongeController extends AbstractController
      */
     public function edit(Request $request, Conge $conge): Response
     {
-        $this->denyAccessUnlessGranted("ROLE_ADMIN");
         //dump($conge);
         
         /** 
