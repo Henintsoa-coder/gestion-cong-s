@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
     {
         //Définition de la variable $transport.
         $transport = (new  Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
-                ->setUserName('entreprise.henintsoa1987@gmail.com')
+                ->setUserName('entreprise.henintsoa1987@gmail.com', 'ECR')
 				->setPassword('leonidas1987')
 				->setStreamOptions(
                     array('ssl' => array('allow_self_signed' => true, 'verify_peer' => false))

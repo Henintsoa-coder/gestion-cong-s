@@ -23,7 +23,7 @@ class UtilisateurController extends AbstractController
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
         return $this->render('utilisateur/index.html.twig', [
-            'utilisateurs' => $utilisateurRepository->findAll(),
+            'utilisateurs' => $utilisateurRepository->findOneBy(['id' => $this->getUser()->getId()])
         ]);
     }
 
@@ -103,6 +103,5 @@ class UtilisateurController extends AbstractController
     public function reset_password(Utilisateur $utilisateur) {
 
     }
-
     
 }

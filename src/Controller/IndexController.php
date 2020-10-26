@@ -26,6 +26,12 @@ class IndexController extends AbstractController
         $absencesUser = $absenceRepository->findByUtilisateurId($this->getUserId());
         
         dump($congesUser);
+        dump($this->getUser());
+
+        if ($this->getUser() AND $this->getUser()->getActivationToken()!== null) {
+            return $this->redirectToRoute('app_logout');
+            $this->addFlash('success', 'Veuillez activer votre compte en cliquant sur le lien qui vous a été envoyé.');
+        }
 
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
