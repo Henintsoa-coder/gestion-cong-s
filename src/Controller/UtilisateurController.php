@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Form\ChangePassType;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,10 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/utilisateur")
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
  */
 class UtilisateurController extends AbstractController
 {
@@ -68,12 +71,49 @@ class UtilisateurController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/utilisateur_reset_password", name="utilisateur_reset_password")
+     * @Route("/change_pass/{id}", name="change_password", methods={"GET","POST"})
      */
-    public function reset_password(Utilisateur $utilisateur) {
+    public function changePassword(Utilisateur $utilisateur, Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+    	$em = $this->getDoctrine()->getManager();
+        $user = $utilisateur;
+        $form = $this->createForm(ChangePassType::class, $user);
+        
+        if($this->getUser()->getId() !== $user->getId()){
+            $this->addFlash('danger', 'vous n\'avez le droit d\'accéder au profil de cet utilisateur.');
+            return $this->redirectToRoute('utilisateur_index');
+        }   
 
+    	$form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$passwordEncoder = $this->get('security.password_encoder');
+            /*dump($request->request);
+            $oldPassword = $request->request->get('change_pass')['oldPassword'];
+            dump($oldPassword);
+
+            die();*/
+
+            // Si l'ancien mot de passe est bon
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($newEncodedPassword);
+                $em->persist($user);
+                $em->flush();
+                
+                $this->addFlash('success', 'Mot de passe modifié avec succès.');
+                return $this->redirectToRoute('utilisateur_index');
+           
+        }
+        
+
+    	return $this->render('utilisateur/changePassword.html.twig', array(
+    		'form' => $form->createView(),
+    	));
     }
 
+    /**
+     * Redirige l'utilisateur vers le formulaire de login si celui n'a pas encore validé son e-mail
+     */
     private function redirectUnlessGranted(Utilisateur $utilisateur) {
         if ($this->getUser()->getId() !== $utilisateur->getId()) {
             $this->redirectToRoute('index');

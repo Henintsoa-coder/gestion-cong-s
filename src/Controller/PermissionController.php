@@ -32,6 +32,13 @@ class PermissionController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $nb_permissions = $this->getUser()->getNbPermissions();
+
+        if ($nb_permissions == 0) {
+            $this->addFlash('danger', 'Vous n\'avez plus de permission; veuillez prendre un congé.');
+            return $this->redirectToRoute('conge_new');
+        }
+
         $permission = new Permission();
         $form = $this->createForm(PermissionType::class, $permission);
         $form->handleRequest($request);

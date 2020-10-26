@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}mon profil{% endblock %}
+{% block title %} Mon profil {% endblock %}
 
 {% block stylesheets %}
     <style>
@@ -67,7 +67,7 @@
                     {% endif %}
                     </tbody>
                 </table>
-
+                <a href="{{ path('change_password', {'id': utilisateur.id})}}">changer mon mot de passe</a>
             </div>
         </div>
     </div>
