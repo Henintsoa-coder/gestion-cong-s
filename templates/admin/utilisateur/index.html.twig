@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}mon profil{% endblock %}
+{% block title %}Utilisateur index{% endblock %}
 
 {% block stylesheets %}
     <style>
@@ -14,24 +14,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 mb-4">
-                <h1 class="mt-5 mb-5" style="text-align:center;">Mes données.</h1>
+                <h1 class="mt-5 mb-5" style="text-align:center;">Liste des utilisateurs.</h1>
 
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Id</th>
                             <th>Nom</th>
                             <th>Fonction</th>
-                            <th>E-mail</th>
+                            <th>Email</th>
                             <th>Téléphone</th>
-                            <th>Rôle(s)</th>
+                            <th>Roles</th>
                             <th>Congés</th>
                             <th>Permissions</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% if utilisateur %}
+                    {% for utilisateur in utilisateurs %}
                         <tr>
                             <td>{{ utilisateur.id }}</td>
                             <td>
@@ -47,27 +47,29 @@
                                     {% if role =='ROLE_USER' %}
                                         Utilisateur
                                     {% elseif role == 'ROLE_MODO' %}
-                                        Modérateur <br>
+                                        Modérateur
                                     {% elseif role == 'ROLE_ADMIN' %}
-                                        Administrateur <br>
+                                        Administrateur
                                     {% endif %}
                                 {% endfor %}
                                 {#{ utilisateur.roles ? utilisateur.roles|json_encode : '' }#}</td>
                             <td style="text-align:center;">{{ utilisateur.nbConges | number_format(1, '.', ' ') }}</td>
                             <td style="text-align:center;">{{ utilisateur.nbPermissions |number_format(1, '.', ' ') }}</td>
                             <td>
-                                <a href="{{ path('utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-primary btn-block" target="parent">Afficher</a>
-                                <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning btn-block" style="color:white" target="parent">Editer</a>
+                                <a href="{{ path('admin_utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-primary btn-block" target="parent">Voir</a>
+                                <a href="{{ path('admin_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-warning btn-block" style="color:white" target="parent">Editer</a>
+                                {{ include('admin/utilisateur/_delete_form.html.twig') }}
                             </td>
                         </tr>
                     {% else %}
                         <tr>
                             <td colspan="11">Aucun utilisateur trouvé.</td>
                         </tr>
-                    {% endif %}
+                    {% endfor %}
                     </tbody>
                 </table>
 
+                <a href="{{ path('app_register') }}" class="btn btn-primary">Enregistrer un nouveau salarié</a>
             </div>
         </div>
     </div>

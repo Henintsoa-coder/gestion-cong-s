@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\admin;
 
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class UtilisateurType extends AbstractType
+class AdminUtilisateurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -40,6 +40,18 @@ class UtilisateurType extends AbstractType
             ->add('confirm_password', PasswordType::class)
             */
             ->add('telephone')
+            ->add('nb_conges')
+            ->add('nb_permissions')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Utilisateur' => 'ROLE_USER',
+                    'Modérateur' => 'ROLE_MODO',
+                    'Administrateur' => 'ROLE_ADMIN'
+                ],
+                'expanded' => true,
+                'multiple' => true,
+                'label' => 'Rôle(s)'
+            ])
         ;
     }
 

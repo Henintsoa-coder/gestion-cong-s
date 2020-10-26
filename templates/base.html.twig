@@ -24,6 +24,11 @@
                 </li>
                 {% if is_granted("ROLE_USER") %}
                     <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ path('utilisateur_index') }}">
+                            Mes données
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Créer une demande
                         </a>
@@ -47,13 +52,14 @@
                             <a class="dropdown-item" href="{{ path('admin_absence_index') }}">Données abscence.</a>
                         </div>
                     </li>
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Données salariés
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('app_register') }}">Enregisgtrer un nouvel utilisateur.</a>
-                            <a class="dropdown-item" href="{{ path('utilisateur_index') }}">Voir la liste des salariés.</a>
+                            <a class="dropdown-item" href="{{ path('app_register') }}">Enregistrer un nouvel utilisateur.</a>
+                            <a class="dropdown-item" href="{{ path('admin_utilisateur_index') }}">Voir la liste des salariés.</a>
                         </div>
                     </li>
                 {% endif %}
@@ -71,102 +77,36 @@
                     {% endif %}
                 </ul>
             </div>
-            </nav>
-        <!--nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">ECR</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{path('index')}}">Accueil <span class="sr-only">(current)</span></a>
-                    </li>
-                    {% if is_granted("ROLE_USER") %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Créer une demande
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('conge_new') }}">Congé</a>
-                            <a class="dropdown-item" href="#">Permission</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Déclaration d'abscence</a>
-                        </div>
-                    </li>
-                    {% endif %}
-                    
-                    {% if is_granted("ROLE_ADMIN") %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Toutes les demandes
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('admin_conge_index') }}">congés</a>
-                            <a class="dropdown-item" href="#">permissions</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Déclaration d'abscence</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Données salariés
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('app_register') }}">Créer un nouveau salarié</a>
-                            <a class="dropdown-item" href="{{ path('utilisateur_index') }}">Voir la liste des salariés</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Autre possibilité</a>
-                        </div>
-                    </li>
-                    {% endif %}
-                </ul>
-
-                <ul class="navbar-nav">
-                    {% if app.user %}
-                        <li class="nav-item active">
-                            <a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item active">
-                            <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav-->
-            <div class="container">
-                <!--Permet d'afficher les messages flash-success -->
-                {% for message in app.flashes('success') %}
-                    <div class="alert alert-success mt-5">
-                         {{ message }}
-                    </div>
-                {% endfor %}
-
-                <!--Permet d'afficher les messages flash-danger -->
-                {% for message in app.flashes('danger') %}
-                    <div class="alert alert-danger mt-5">
-                         {{ message }}
-                    </div>
-                {% endfor %}
-
-                <!--Permet d'afficher les messages flash-danger -->
-                {% for message in app.flashes('warning') %}
-                    <div class="alert alert-warning mt-5">
-                         {{ message }}
-                    </div>
-                {% endfor %}
+        </nav>
         
-                {% block body %}
+        <div class="container">
+            <!--Permet d'afficher les messages flash-success -->
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success mt-5">
+                        {{ message }}
+                </div>
+            {% endfor %}
+
+            <!--Permet d'afficher les messages flash-danger -->
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger mt-5">
+                        {{ message }}
+                </div>
+            {% endfor %}
+
+            <!--Permet d'afficher les messages flash-danger -->
+            {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning mt-5">
+                        {{ message }}
+                </div>
+            {% endfor %}
+        
+            {% block body %}
                         
                     
-                {% endblock %}
-            </div>
+            {% endblock %}
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>

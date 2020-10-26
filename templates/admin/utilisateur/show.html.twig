@@ -16,18 +16,12 @@
                 <td>{{ utilisateur.fonction }}</td>
             </tr>
             <tr>
-                <th>Email</th>
+                <th>E-mail</th>
                 <td>{{ utilisateur.email }}</td>
             </tr>
             <tr>
-                <th>Telephone</th>
-                <td> 
-                    {% if utilisateur.telephone %}
-                        {{ utilisateur.telephone }}
-                    {% else %}
-                        Pas de numero de téléphone.
-                    {% endif %}
-                </td>
+                <th>Téléphone</th>
+                <td>{{ utilisateur.telephone }}</td>
             </tr>
             <tr>
                 <th>Rôle(s)</th>
@@ -54,9 +48,9 @@
         </tbody>
     </table>
 
-    <div class="mb-5">
-        <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-primary">Editer</a>
-        <a href="{{ path('utilisateur_index') }}" class="btn btn-secondary">Revenir à l'accueil.</a>
-    </div>
 
+    <a href="{{ path('utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-primary">Editer</a>
+    <a href="{{ path('utilisateur_index') }}" class="btn btn-secondary">Revenir à la liste</a>
+
+    {{ include('admin/utilisateur/_delete_form.html.twig') }}
 {% endblock %}

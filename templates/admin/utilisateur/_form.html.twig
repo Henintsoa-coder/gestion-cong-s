@@ -4,7 +4,10 @@
     {{ form_row(form.fonction) }}
     {{ form_row(form.email) }}
     {{ form_row(form.telephone) }}
+    {{ form_row(form.nb_conges) }}
+    {{ form_row(form.nb_permissions) }}
+    {{ form_row(form.roles) }}
     <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-    <a href="{{ path('utilisateur_index') }}" class="btn btn-secondary">Revenir à la liste.</a>
+    <a href="{{ path('admin_utilisateur_index') }}" class="btn btn-secondary">Revenir à la liste</a>
 
 {{ form_end(form) }}

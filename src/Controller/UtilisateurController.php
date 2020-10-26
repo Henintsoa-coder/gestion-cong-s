@@ -22,35 +22,13 @@ class UtilisateurController extends AbstractController
      */
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
+        $utilisateur = $utilisateurRepository->findOneBy(['id' => $this->getUser()]);
+
+        dump($utilisateur);
+
         return $this->render('utilisateur/index.html.twig', [
-            'utilisateurs' => $utilisateurRepository->findOneBy(['id' => $this->getUser()->getId()])
+            'utilisateur' => $utilisateur
         ]);
-    }
-
-    /**
-     * @Route("/new", name="utilisateur_new", methods={"GET","POST"})
-     */
-    public function new(Request $request): Response
-    {
-        /*$utilisateur = new Utilisateur();
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($utilisateur);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('utilisateur_index');
-        }
-
-        return $this->render('utilisateur/new.html.twig', [
-            'utilisateur' => $utilisateur,
-            'form' => $form->createView(),
-        ]);*/
-
-        return $this->redirectToRoute('utilisateur_index');
-
     }
 
     /**
@@ -58,6 +36,7 @@ class UtilisateurController extends AbstractController
      */
     public function show(Utilisateur $utilisateur): Response
     {
+        $this->redirectUnlessGranted($utilisateur);
         return $this->render('utilisateur/show.html.twig', [
             'utilisateur' => $utilisateur,
         ]);
@@ -68,6 +47,11 @@ class UtilisateurController extends AbstractController
      */
     public function edit(Request $request, Utilisateur $utilisateur): Response
     {
+        $this->redirectUnlessGranted($utilisateur);
+        if ($this->getUser()->getId() !== $utilisateur->getId()) {
+            $this->redirectToRoute('index');
+        }
+
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
@@ -84,24 +68,15 @@ class UtilisateurController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="utilisateur_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Utilisateur $utilisateur): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$utilisateur->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($utilisateur);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('utilisateur_index');
-    }
-
-    /**
      * @Route("/{id}/utilisateur_reset_password", name="utilisateur_reset_password")
      */
     public function reset_password(Utilisateur $utilisateur) {
 
     }
-    
+
+    private function redirectUnlessGranted(Utilisateur $utilisateur) {
+        if ($this->getUser()->getId() !== $utilisateur->getId()) {
+            $this->redirectToRoute('index');
+        }
+    }
 }
