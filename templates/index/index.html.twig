@@ -11,14 +11,19 @@
                             <h1 style="text-align:center" class="mb-5"> Bonjour {{ user }} ! </h1>
                             <br>
                         <div class="alert alert-info" style="padding-top:21px">
-                            <p style="text-align:center">
-                                Nombre de jours de congés disponibles : <br>
-                                {{ nb_conges | number_format(1, '.', ' ') }} jours.
+                            <p style="text-align:center;">
+                                Nombre de jours de congés disponibles :
                             </p>
-                            <p style="text-align:center">
-                                Nombre de jours de permission disponibles : <br> 
-                                {{ nb_permissions | number_format(1, '.', ' ')}} jours.
+                            <h2 style="text-align:center">
+                                {{ nb_conges | number_format(1, ',', ' ') }} jours
+                            </h2> 
+                            <br>
+                            <p style="text-align:center;">
+                                Nombre de jours de permission disponibles : 
                             </p>
+                            <h2 style="text-align:center">
+                                {{ nb_permissions | number_format(1, ',', ' ')}} jours
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -40,6 +45,7 @@
                                     <th>motif</th>
                                     <th>créé le</th>
                                     <th>état</th>
+                                    <th>Motif refus</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -66,6 +72,7 @@
                                             </div>
                                         {% endif %}
                                     </td>
+                                    <td>{{ congeUser.motifRefus }}</td>
                                     <td>
                                         <!--a href="{{ path('conge_show', {'id': congeUser.id}) }}">show</a-->
                                         {% if (congeUser.etat is same as(null)) %}
@@ -107,6 +114,7 @@
                                         <th>Motif</th>
                                         <th>Créée le</th>
                                         <th>Etat</th>
+                                        <th>Motif refus</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -132,6 +140,9 @@
                                                     {{ 'Refusée' }}
                                                 </div>
                                             {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ permissionUser.motifRefus }}
                                         </td>
                                         <td>
                                             <!--a href="{{ path('permission_show', {'id':  permissionUser.id}) }}">show</a-->
@@ -170,6 +181,8 @@
                                         <th>Date de fin</th>
                                         <th>Motif</th>
                                         <th>Créé le</th>
+                                        <th>Etat</th>
+                                        <th>pièce_jointe</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -182,11 +195,31 @@
                                         <td>{{  absenceUser.motif }}</td>
                                         <td>{{  absenceUser.createdAt ?  absenceUser.createdAt|date('d/m/Y H:i:s') : '' }}</td>
                                         <td>
+                                            {% if absenceUser.vue is same as(null) %}
+                                                <div class="alert alert-info" style="text-align:center">
+                                                    {{ 'Non-vu.' }}
+                                                </div>
+                                            {% elseif absenceUser.vue == 1 %}
+                                                <div class="alert alert-success" style="text-align:center">
+                                                    {{ 'Vue' }}
+                                                </div>
+                                            {% elseif absenceUser.vue == 0 %}
+                                                <div class="alert alert-danger" style="text-align:center">
+                                                    {{ 'Non-vue.' }}
+                                                </div>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if (absenceUser.image) %}
+                                                <img src="{{ asset('uploads/images/' ~ absenceUser.image) }}" alt=""  width="80" height="80">
+                                            {% endif %}
+                                        </td>
+                                        <td>
                                             <!--a href="{{ path('conge_show', {'id':  absenceUser.id}) }}">show</a-->
                                             
                                             <a href="{{ path('absence_edit', {'id':  absenceUser.id}) }}" class="btn btn-secondary">Editer</a>
                                             <form method="post" action="{{ path('absence_delete', {'id':  absenceUser.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" style="display:inline-block">
-                                                <input type="hidden" name="_method" value="DELETE">
+                                                <input type="hidden" name="_method" value="Supprimer">
                                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~  absenceUser.id) }}">
                                                 <button class="btn btn-danger">Supprimer</button>
                                             </form>

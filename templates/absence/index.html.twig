@@ -13,6 +13,7 @@
                 <th>Date_debut</th>
                 <th>Date_fin</th>
                 <th>Motif</th>
+                <th>Etat</th>
                 <th>Created_at</th>
                 <th>actions</th>
             </tr>
@@ -28,6 +29,9 @@
                 <td>{{ absence.dateDebut ? absence.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ absence.dateFin ? absence.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ absence.motif }}</td>
+                <td>
+                    {{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}
+                </td>
                 <td>{{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('absence_show', {'id': absence.id}) }}">show</a>

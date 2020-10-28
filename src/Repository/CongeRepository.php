@@ -26,6 +26,26 @@ class CongeRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    //les demandes à traiter par le modérateur
+    public function findAllNotViseeDESC(){
+        return $this->createQueryBuilder('c')
+        ->andWhere('c.vue = null')
+        ->andWhere('c.vue = false')
+        ->orderBy('c.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    //les demandes à traiter par l'admininstrateur
+    public function findAllViseeDESC(){
+        return $this->createQueryBuilder('c')
+        ->andWhere('c.vue = true')
+        ->orderBy('c.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    //les demandes vue par un ["ROLE_USER"]
     public function findOneUserById($utilisateurId): ?Conge
     {
         return $this->createQueryBuilder('c')

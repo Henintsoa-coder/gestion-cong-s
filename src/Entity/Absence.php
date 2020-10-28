@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AbsenceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AbsenceRepository::class)
@@ -42,6 +43,17 @@ class Absence
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $vue;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "application/pdf"})
+     */
+    private $image;
 
 
     public function getId(): ?int
@@ -105,6 +117,30 @@ class Absence
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getVue(): ?bool
+    {
+        return $this->vue;
+    }
+
+    public function setVisee(?bool $vue): self
+    {
+        $this->vue = $vue;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }

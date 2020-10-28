@@ -36,7 +36,7 @@ class AdminCongeController extends AbstractController
     public function index(CongeRepository $congeRepository): Response
     {
         return $this->render('admin/conge/index.html.twig', [
-            'conges' => $congeRepository->findAllDESC()
+            'conges' => $congeRepository->findAllViseeDESC()
         ]);
     }
 

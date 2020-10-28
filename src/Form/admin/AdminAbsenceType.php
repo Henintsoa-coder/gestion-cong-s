@@ -15,8 +15,11 @@ class AdminAbsenceType extends AbstractType
             ->add('date_debut')
             ->add('date_fin')
             ->add('motif')
-            ->add('created_at')
-            ->add('utilisateur')
+            ->add('vue', null, [
+                'label' => 'Vu ?'
+            ])
+            /*->add('created_at')
+            ->add('utilisateur')*/
         ;
     }
 

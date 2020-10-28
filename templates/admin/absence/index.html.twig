@@ -32,8 +32,8 @@
                 <td>{{ absence.createdAt ? absence.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td></td>
                 <td>
-                    <a href="{{ path('absence_show', {'id': absence.id}) }}">show</a>
-                    <a href="{{ path('absence_edit', {'id': absence.id}) }}">edit</a>
+                    <a href="{{ path('absence_show', {'id': absence.id}) }}">Voir</a>
+                    <!-- a href="{{ path('absence_edit', {'id': absence.id}) }}">edit</a -->
                 </td>
             </tr>
         {% else %}

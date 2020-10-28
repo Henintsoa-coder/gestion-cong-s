@@ -29,11 +29,25 @@
                 <td>{{ permission.dateDebut ? permission.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.dateFin ? permission.dateFin|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ permission.motif }}</td>
-                <td>{{ permission.etat ? 'Yes' : 'No' }}</td>
+                <td>
+                    {% if permission.etat is same as(null) %}
+                        <div class="alert alert-info" style="text-align:center">
+                            {{ 'En cours' }}
+                        </div>
+                    {% elseif permission.etat == 1 %}
+                        <div class="alert alert-success" style="text-align:center">
+                            {{ 'Accepté' }}
+                        </div>
+                    {% elseif permission.etat == 0 %}
+                        <div class="alert alert-danger" style="text-align:center">
+                            {{ 'Refusé' }}
+                        </div>
+                    {% endif %}
+                </td>
                 <td>{{ permission.createdAt ? permission.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_permission_show', {'id': permission.id}) }}" target="parent" class="btn btn-primary">Voir</a>
-                    <a href="{{ path('admin_permission_edit', {'id': permission.id}) }}" target="parent" class="btn btn-warning" style="color:white;">Editer</a>
+                    <a href="{{ path('admin_permission_show', {'id': permission.id}) }}" target="parent" class="btn btn-primary btn-block">Voir</a>
+                    <a href="{{ path('admin_permission_edit', {'id': permission.id}) }}" target="parent" class="btn btn-warning btn-block" style="color:white;">Editer</a>
                 </td>
             </tr>
         {% else %}

@@ -24,7 +24,7 @@ class AdminAbsenceController extends AbstractController
     public function index(AbsenceRepository $absenceRepository): Response
     {
         return $this->render('admin/absence/index.html.twig', [
-            'absences' => $absenceRepository->findAll(),
+            'absences' => $absenceRepository->findAllDESC(),
         ]);
     }
 

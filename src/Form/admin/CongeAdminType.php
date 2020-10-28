@@ -18,10 +18,11 @@ class CongeAdminType extends AbstractType
             ])*/
             /*->add('motif')*/
             ->add('etat', null, [
-                'label' => 'Valider la demande.'
+                'label' => 'Valider la demande ?'
             ])
-            /*->add('created_at')*/
-            /*->add('utilisateur')*/
+            ->add('motif_refus', null, [
+                'label' => 'Motif de refus'
+            ])
         ;
     }
 

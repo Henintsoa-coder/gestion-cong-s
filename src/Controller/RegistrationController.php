@@ -94,7 +94,7 @@ class RegistrationController extends AbstractController
             
             $this->addFlash('success', 'Salarié enregistré avec succès');
             
-            return $this->redirectToRoute('utilisateur_index');
+            return $this->redirectToRoute('admin_utilisateur_index');
         }
 
         return $this->render('registration/register.html.twig', [

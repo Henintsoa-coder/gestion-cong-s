@@ -47,6 +47,16 @@ class Permission
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $vue;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $motif_refus;
     
 
     public function getId(): ?int
@@ -122,6 +132,30 @@ class Permission
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getVue(): ?bool
+    {
+        return $this->vue;
+    }
+
+    public function setVue(?bool $vue): self
+    {
+        $this->vue = $vue;
+
+        return $this;
+    }
+
+    public function getMotifRefus(): ?string
+    {
+        return $this->motif_refus;
+    }
+
+    public function setMotifRefus(?string $motif_refus): self
+    {
+        $this->motif_refus = $motif_refus;
 
         return $this;
     }

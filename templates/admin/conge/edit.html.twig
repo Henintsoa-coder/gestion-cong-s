@@ -82,6 +82,7 @@
         <div class="mt-5 mb-5">
             {{ form_start(form) }}
                 {{ form_row(form.etat) }}
+                {{ form_row(form.motif_refus) }}
                 <button class="btn btn-primary">{{ button_label|default('Valider les modifications') }}</button>
                 <a href="{{ path('admin_conge_index') }}" class="btn btn-secondary">Revenir à la liste.</a>
                 <a href="" class="btn btn-info">Imprimer</a>

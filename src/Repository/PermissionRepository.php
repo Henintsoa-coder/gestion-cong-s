@@ -19,6 +19,33 @@ class PermissionRepository extends ServiceEntityRepository
         parent::__construct($registry, Permission::class);
     }
 
+    public function findAllDESC(){
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    //les demandes à traiter par le modérateur
+    public function findAllNotViseeDESC(){
+        return $this->createQueryBuilder('p')
+        ->andWhere('p.vue = null')
+        ->andWhere('p.vue = false')
+        ->orderBy('p.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    //les demandes à traiter par l'admininstrateur 
+    //requêtes SQL à revoir
+    public function findAllViseeDESC(){
+        return $this->createQueryBuilder('p')
+        ->andWhere('p.vue = true')
+        ->orderBy('p.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * Returns an array of Permissions objects
     //  */

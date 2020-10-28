@@ -17,12 +17,13 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('index') }}">Accueil
-                    <span class="sr-only">(current)</span>
-                    </a>
-                </li>
+                
                 {% if is_granted("ROLE_USER") %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('index') }}">Accueil
+                        <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="{{ path('utilisateur_index') }}">
                             Mes données
@@ -40,10 +41,24 @@
                         </div>
                     </li>
                 {% endif %}
+                {% if is_granted("ROLE_MODO") %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Modérer les demandes
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('moderator_conge_index') }}">congés</a>
+                            <a class="dropdown-item" href="{{ path('moderator_permission_index')}}">permissions</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path('moderator_absence_index') }}">Données abscence.</a>
+                        </div>
+                    </li>
+                {% endif %}
+
                 {% if is_granted("ROLE_ADMIN") %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Toutes les demandes
+                            Administrer les demandes
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('admin_conge_index') }}">congés</a>
@@ -55,11 +70,11 @@
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Données salariés
+                            Utilisateurs
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ path('app_register') }}">Enregistrer un nouvel utilisateur.</a>
-                            <a class="dropdown-item" href="{{ path('admin_utilisateur_index') }}">Voir la liste des salariés.</a>
+                            <a class="dropdown-item" href="{{ path('app_register') }}">Enregistrer un nouvel utilisateur</a>
+                            <a class="dropdown-item" href="{{ path('admin_utilisateur_index') }}">Voir la liste des utilisateurs</a>
                         </div>
                     </li>
                 {% endif %}

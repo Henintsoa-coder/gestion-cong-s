@@ -18,6 +18,8 @@ class IndexController extends AbstractController
      */
     public function index(CongeRepository $congeRepository, PermissionRepository $permissionRepository, AbsenceRepository $absenceRepository)
     {
+        
+        
         $user = $this->getUser()?$this->getUser()->getUserName():'';
         $nb_conges = $this->getUser()?$this->getUser()->getNbConges():'';
         $nb_permissions = $this->getUser()?$this->getUser()->getNbPermissions():'';
@@ -25,6 +27,14 @@ class IndexController extends AbstractController
         $permissionsUser = $permissionRepository->findByUtilisateurId($this->getUserId());
         $absencesUser = $absenceRepository->findByUtilisateurId($this->getUserId());
         
+        $roles = $this->getUser()->getRoles();
+        
+        if (in_array("ROLE_ADMIN", $roles)) {
+            return $this->redirectToRoute("admin_accueil", [
+                'user' => $user
+            ]);
+        }
+
         dump($congesUser);
         dump($this->getUser());
 

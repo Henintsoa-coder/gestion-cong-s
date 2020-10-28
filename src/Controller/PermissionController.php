@@ -34,7 +34,7 @@ class PermissionController extends AbstractController
     {
         $nb_permissions = $this->getUser()->getNbPermissions();
 
-        if ($nb_permissions == 0) {
+        if ($nb_permissions <= 0) {
             $this->addFlash('danger', 'Vous n\'avez plus de permission; veuillez prendre un congé.');
             return $this->redirectToRoute('conge_new');
         }
@@ -44,6 +44,18 @@ class PermissionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //Est-ce que le nombre de jours de permission demandé est trop élevé ?
+            $timePermission = date_diff($permission->getDateDebut(), $permission->getDateFin());
+
+            $nbJoursPermissions = intval($timePermission->format('%d'));
+            $nbHeuresPermissions = intval($timePermission->h)/8;
+            $nb_total_permissions = $nbJoursPermissions + $nbHeuresPermissions;
+
+            if ($nb_permissions - $nb_total_permissions < 0) {
+                $this->addFlash('danger', 'Le nombre de jours de permission demandé est trop élevé.');
+                return $this->redirectToRoute('permission_new');
+            }
+
             $permission->setCreatedAt(new DateTime());
             $permission->setUtilisateur($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();

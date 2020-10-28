@@ -56,6 +56,8 @@ class AdminUtilisateurController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'Utilisateur modifié avec succès');
+
             return $this->redirectToRoute('admin_utilisateur_index');
         }
 
@@ -75,6 +77,8 @@ class AdminUtilisateurController extends AbstractController
             $entityManager->remove($utilisateur);
             $entityManager->flush();
         }
+
+        $this->addFlash('success', 'Utilisateur supprimé avec succès.');
 
         return $this->redirectToRoute('admin_utilisateur_index');
     }

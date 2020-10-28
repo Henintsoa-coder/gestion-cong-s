@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conge{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-md-12"  style=" border:2px solid #eee; border-radius:12px;">
+                <h2 style="padding-top:8px; padding-bottom:11px; text-align:center;" class=" mt-3 mb-3">Demande de Congé</h2>
+                
+                <table class="table table-bordered table-striped" style="text-align:center;">
+                    <tbody>
+                        <tr>
+                            <th>Identifiant du congé</th>
+                            <td>{{ conge.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nom du salarié</th>
+                            <td>{{ conge.utilisateur.nom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom</th>
+                            <td>{{ conge.utilisateur.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fonction</th>
+                            <td>{{ conge.utilisateur.fonction }}</td>
+                        </tr>
+                        <tr>
+                            <th>Contact</th>
+                            <td>
+                                {% if conge.utilisateur.telephone != (null) %} 
+                                  {{ conge.utilisateur.telephone }} -
+                                {% endif %}
+                                {{ conge.utilisateur.email }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Date de début du congé</th>
+                            <td>{{ conge.dateDebut ? conge.dateDebut|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date de fin du congé</th>
+                            <td>{{ conge.dateFin ? conge.dateFin|date('d-m-Y H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Motif</th>
+                            <td>{{ conge.motif }}</td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <p style="padding-top:11px;"> 
+                                    Etat
+                                </p>
+                            </th>
+                            <td>
+                                {% if conge.etat is same as(null) %}
+                                    <div class="alert alert-info" style="text-align:center; color:white !important; border-radius: 7px; margin-bottom:0px;">
+                                        {{ 'En cours' }}
+                                    </div>
+                                {% elseif conge.etat == 1 %}
+                                    <div class="alert alert-success" style="text-align:center; color:white !important; border-radius: 7px; margin-bottom:0px;">
+                                        {{ 'Acceptée' }}
+                                    </div>
+                                {% elseif conge.etat == 0 %}
+                                    <div class="alert alert-danger" style="text-align:center;  color:white !important;  border-radius: 7px; margin-bottom:0px;">
+                                        {{ 'Refusée' }}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Créée le</th>
+                            <td>{{ conge.createdAt ? conge.createdAt|date('d-m-Y') : '' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br>
+                <table class="table table-bordered" style="text-align:center;" class="mt-4">
+                    <tbody>
+                        <tr>
+                            <td colspan="3">
+                                <h4 style="padding-top:8px; padding-bottom:11px; text-align:center" class="mb-0">Signature</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>L'intéressé</td>
+                            <td>Le Responsaple</td>
+                            <td>La Direction</td>
+                        </tr>
+                        <tr>
+                            <td style="height:61px;"></td>
+                            <td style="height:61px;"></td>
+                            <td style="height:61px;"></td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan = "3">
+                                Observations:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height:81px;" colspan = "3">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <!--a href="{{ path('admin_conge_index') }}" class="btn btn-primary">Revenir à la liste</a>
+
+                <a href="{{ path('admin_conge_edit', {'id': conge.id}) }}" class="btn btn-warning" style="color:white">Modifier</a>
+                <a href="{{ path('print_demande_conge', {'id': conge.id }) }}" class="btn btn-info">Convertir en pdf</a-->
+            </div>
+            
+        </div>
+        <!--div class="row">
+            <div class="col mt-2">
+                {{ include('conge/_delete_form.html.twig') }}
+            </div>
+        </div-->
+    </div>
+
+{% endblock %}

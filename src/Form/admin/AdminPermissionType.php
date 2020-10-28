@@ -17,13 +17,12 @@ class AdminPermissionType extends AbstractType
             ->add('date_debut')
             ->add('date_fin')
             ->add('motif')
-            ->add('etat')
-            /*->add('created_at')
-            ->add('utilisateur', EntityType::class, [
-                'class' => Utilisateur::class,
-                'required' => false,
-                'choice_label' => 'id'
-            ])*/
+            ->add('etat', null, [
+                'label' => 'Valider la demande ?'
+            ])
+            ->add('motif_refus', null, [
+                'label' => 'Motif de refus'
+            ])
         ;
     }
 

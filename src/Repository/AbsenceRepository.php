@@ -19,6 +19,32 @@ class AbsenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Absence::class);
     }
 
+    public function findAllDESC(){
+        return $this->createQueryBuilder('a')
+        ->orderBy('a.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    //les demandes à traiter par le modérateur
+    public function findAllNotViseeDESC(){
+        return $this->createQueryBuilder('a')
+        ->andWhere('a.vue = null')
+        ->andWhere('a.vue = false')
+        ->orderBy('a.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    //les demandes à traiter par l'admininstrateur
+    public function findAllViseeDESC(){
+        return $this->createQueryBuilder('a')
+        ->andWhere('a.vue = true')
+        ->orderBy('a.id', 'DESC')
+        ->getQuery()
+        ->getResult();
+    }
+
     // /**
     //  * Returns an array of Absence objects
     //  */

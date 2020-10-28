@@ -24,7 +24,7 @@ class AdminPermissionController extends AbstractController
     public function index(PermissionRepository $permissionRepository): Response
     {
         return $this->render('admin/permission/index.html.twig', [
-            'permissions' => $permissionRepository->findAll(),
+            'permissions' => $permissionRepository->findAllDESC(),
         ]);
     }
 

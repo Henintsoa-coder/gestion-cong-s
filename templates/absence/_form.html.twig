@@ -1,4 +1,7 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.date_debut) }}
+    {{ form_row(form.date_fin) }}
+    {{ form_row(form.motif) }}
+    {{ form_row(form.image) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
